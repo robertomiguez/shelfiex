@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function About() {
+  const { theme } = useTheme();
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>About</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[{ color: theme.text }, styles.text]}>About</Text>
     </View>
   );
 }
@@ -12,7 +13,6 @@ export default function About() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#05b256',
     alignItems: 'center',
     justifyContent: 'center',
   },
