@@ -1,15 +1,18 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React from 'react';
 import Logo from '../assets/logo.png';
 import { Link } from 'expo-router';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function Home() {
+  const { theme } = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Image source={Logo} style={styles.img} />
-      <Text style={styles.text}>Welcome to ShelfieX</Text>
+      <Text style={[{ color: theme.text }, styles.text]}>
+        Welcome to ShelfieX
+      </Text>
       <View style={{ height: 24 }} />
-      <Link href="/about" style={styles.link}>
+      <Link href="/about" style={[{ color: theme.link }, styles.link]}>
         Go to About
       </Link>
     </View>
@@ -19,7 +22,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#05b256',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -33,6 +35,6 @@ const styles = StyleSheet.create({
     height: 100,
   },
   link: {
-    color: 'white',
+    fontSize: 18,
   },
 });

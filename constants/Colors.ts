@@ -1,0 +1,25 @@
+export const Colors = {
+  primary: '#05b256',
+  secondary: '#028a3d',
+  warning: '#ffcc00',
+  dark: {
+    background: '#021f04',
+    navBackground: '#021f04',
+    text: '#ffffff',
+    title: '#fff',
+    iconColor: '#ffffff',
+    iconColorFocused: '#94fcc5ff',
+    uiBackground: '#021f04da',
+    link: '#ffffff',
+  },
+  light: {
+    background: '#94fcc5ff',
+    navBackground: '#94fcc5ff',
+    text: '#000000',
+    title: '#000000',
+    iconColor: '#000000',
+    iconColorFocused: '#94fcc5ff',
+    uiBackground: '#94fcc5ff',
+    link: '#014d2e',
+  },
+};
