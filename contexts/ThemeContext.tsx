@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Colors } from '../constants/Colors';
+import { createThemedStyles } from '../constants/GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Define ThemeContextType interface
@@ -21,10 +22,12 @@ export const useTheme = () => {
   }
 
   const theme = Colors[context.isDark ? 'dark' : 'light'];
+  const styles = createThemedStyles(theme);
 
   return {
     ...context,
     theme,
+    styles,
   };
 };
 
