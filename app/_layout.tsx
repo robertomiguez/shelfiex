@@ -3,12 +3,15 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { ThemeToggleButton } from '../components/ThemeToggleButton';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <RootLayoutContent />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <RootLayoutContent />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
 
@@ -27,12 +30,6 @@ function RootLayoutContent() {
         }}
       >
         <Stack.Screen
-          name="(auth)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
           name="index"
           options={{
             title: 'Home',
@@ -40,10 +37,15 @@ function RootLayoutContent() {
           }}
         />
         <Stack.Screen
-          name="about"
+          name="(auth)"
           options={{
-            title: 'About',
-            headerShown: true,
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(dashboard)"
+          options={{
+            headerShown: false,
           }}
         />
       </Stack>

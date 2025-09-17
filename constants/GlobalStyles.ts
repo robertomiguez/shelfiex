@@ -6,7 +6,6 @@ export const createThemedStyles = (theme: any) =>
       flex: 1,
       backgroundColor: theme.background,
       alignItems: 'center',
-      justifyContent: 'center',
     },
     text: {
       fontSize: 18,
