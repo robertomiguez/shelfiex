@@ -3,12 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import UserOnly from '../../components/auth/UserOnly';
 
 export default function DashboardLayout() {
   const { theme, isDark } = useTheme();
   const insets = useSafeAreaInsets();
   return (
-    <>
+    <UserOnly>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Tabs
         screenOptions={{
@@ -64,6 +65,6 @@ export default function DashboardLayout() {
           }}
         />
       </Tabs>
-    </>
+    </UserOnly>
   );
 }
