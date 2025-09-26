@@ -21,9 +21,13 @@ export const Colors = {
     uiBackground: '#021f04da',
     link: '#ffffff',
     btn: '#94fcc5ff',
+    btnPressed: '#8E8E93',
     btnText: '#0a2e0a',
     card: '#0a2e0a',
     shadow: '#000',
+    placeholderText: '#8E8E93',
+    border: '#fff',
+    error: '#ff3b30',
   },
 
   light: {
@@ -39,9 +43,13 @@ export const Colors = {
     uiBackground: '#94fcc5ff',
     link: '#014d2e',
     btn: '#05b256',
+    btnPressed: '#8E8E93',
     btnText: '#ffffff',
     card: '#ffffff',
     shadow: '#000',
+    placeholderText: '#8E8E93',
+    border: '#000',
+    error: '#ff3b30',
   },
 };
 

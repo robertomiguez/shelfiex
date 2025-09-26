@@ -64,4 +64,13 @@ export const createThemedStyles = (theme: any) =>
       width: 100,
       height: 100,
     },
+    input: {
+      width: '80%',
+      padding: 10,
+      borderWidth: 1,
+      borderColor: theme.border,
+      borderRadius: 8,
+      marginBottom: 12,
+      color: theme.text,
+    },
   });
