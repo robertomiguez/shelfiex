@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { Text } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { useUser } from '../../hooks/useUser';
-import { useRouter } from 'expo-router';
+import { useTheme } from '../../contexts/ThemeContext';
+import LoginScreen from '../../app/(auth)/login';
 
 interface UserOnlyProps {
   children: React.ReactNode;
@@ -13,16 +13,20 @@ interface UseUserResult {
 }
 
 const UserOnly = ({ children }: UserOnlyProps) => {
+  const { theme } = useTheme();
   const { user, authChecked }: UseUserResult = useUser();
-  const router = useRouter();
-  useEffect(() => {
-    if (authChecked && !user) {
-      router.replace('/login');
-    }
-  }, [authChecked, user]);
+  if (!authChecked) {
+    return (
+      <ActivityIndicator
+        style={{ marginTop: 20 }}
+        size="large"
+        color={theme.text}
+      />
+    );
+  }
 
-  if (!authChecked || !user) {
-    return <Text>Loading</Text>;
+  if (authChecked && !user) {
+    return <LoginScreen />;
   }
 
   return children;
