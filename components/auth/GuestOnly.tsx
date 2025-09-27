@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { Text } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { useUser } from '../../hooks/useUser';
-import { useRouter } from 'expo-router';
+import { useTheme } from '../../contexts/ThemeContext';
+import Profile from '../../app/(dashboard)/profile';
 
 interface GuestOnlyProps {
   children: React.ReactNode;
@@ -13,18 +13,24 @@ interface UseGuestResult {
 }
 
 const GuestOnly = ({ children }: GuestOnlyProps) => {
+  const { theme } = useTheme();
   const { user, authChecked }: UseGuestResult = useUser();
-  const router = useRouter();
-  useEffect(() => {
-    if (authChecked && user) {
-      router.replace('/profile');
-    }
-  }, [authChecked, user]);
 
-  if (!authChecked || user) {
-    return <Text>Loading</Text>;
+  // 1. still loading
+  if (!authChecked) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color={theme.text} />
+      </View>
+    );
   }
 
+  // 2. User authenticated
+  if (user) {
+    return <Profile />;
+  }
+
+  // 3.Guest (not authenticated)
   return children;
 };
 
