@@ -21,20 +21,37 @@ const Button = ({
   textStyle,
   title,
   children,
+  disabled,
   ...props
-}: ButtonProps) => {
+}: ButtonProps & { disabled?: boolean }) => {
   const { styles } = useTheme();
 
   const renderContent = () => {
     if (title) {
-      return <Text style={[styles.btnText, textStyle]}>{title}</Text>;
+      return (
+        <Text
+          style={[
+            styles.btnText,
+            textStyle,
+            disabled && styles.btnTextDisabled,
+          ]}
+        >
+          {title}
+        </Text>
+      );
     }
     return children;
   };
 
   return (
     <Pressable
-      style={({ pressed }) => [styles.btn, pressed && styles.btnPressed, style]}
+      style={({ pressed }) => [
+        styles.btn,
+        pressed && !disabled && styles.btnPressed, // only apply pressed style if not disabled
+        disabled && styles.btnDisabled, // apply disabled style
+        style,
+      ]}
+      disabled={disabled}
       {...props}
     >
       {renderContent()}
