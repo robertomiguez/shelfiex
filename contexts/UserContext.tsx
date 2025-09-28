@@ -1,8 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { account } from '../lib/appwrite';
 import { ID } from 'react-native-appwrite';
-
-type User = { email: string } | null;
+import { User } from '../types/User';
 
 interface UserContextType {
   user: User;

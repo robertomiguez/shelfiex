@@ -7,6 +7,7 @@ import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SAFE_AREA_EXTRA_TOP } from '../../constants/layout';
 import { useUser } from '../../hooks/useUser';
+import ErrorMessage from '../../components/ErrorMessage';
 
 export default function Login() {
   const { theme, styles } = useTheme();
@@ -52,24 +53,7 @@ export default function Login() {
 
         <Button title="Login" onPress={handleSubmit} />
 
-        {error && (
-          <>
-            <View style={{ height: 8 }} />
-            <Text
-              style={{
-                color: theme.error,
-                paddingVertical: 6,
-                paddingHorizontal: 30,
-                backgroundColor: theme.border,
-                borderRadius: 12,
-                textAlign: 'center',
-                marginHorizontal: 30,
-              }}
-            >
-              {error}
-            </Text>
-          </>
-        )}
+        {error && <ErrorMessage message={error} />}
 
         <View style={{ height: 14 }} />
         <Link href="/register" style={[{ color: theme.link }, styles.link]}>
