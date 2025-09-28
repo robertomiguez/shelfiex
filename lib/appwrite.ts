@@ -1,4 +1,10 @@
-import { Client, Account, Avatars } from 'react-native-appwrite';
+import {
+  Client,
+  Account,
+  Avatars,
+  Databases,
+  TablesDB,
+} from 'react-native-appwrite';
 
 const endpoint = process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT;
 const project = process.env.EXPO_PUBLIC_APPWRITE_PROJECT;
@@ -15,3 +21,5 @@ export const client = new Client()
 
 export const account = new Account(client);
 export const avatars = new Avatars(client);
+export const databases = new Databases(client);
+export const tablesDB = new TablesDB(client);
