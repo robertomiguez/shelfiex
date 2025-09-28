@@ -45,6 +45,15 @@ export const createThemedStyles = (theme: any) =>
       fontSize: 16,
       fontWeight: '600',
     },
+    btnDisabled: {
+      backgroundColor: theme.btnDisabled,
+    },
+
+    btnTextDisabled: {
+      color: theme.btnTextDisabled,
+      fontSize: 16,
+      fontWeight: '600',
+    },
     card: {
       backgroundColor: theme.card || theme.background,
       borderRadius: 12,
