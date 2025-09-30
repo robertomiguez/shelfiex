@@ -55,23 +55,33 @@ export const createThemedStyles = (theme: any) =>
       fontWeight: '600',
     },
     card: {
-      backgroundColor: theme.card || theme.background,
-      borderRadius: 12,
-      padding: 16,
-      marginVertical: 8,
-      shadowColor: theme.shadow || '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      backgroundColor: theme.cardBackground,
+      borderRadius: 8,
+      borderLeftWidth: 3,
+      borderLeftColor: theme.accent,
+      overflow: 'hidden',
     },
     img: {
       marginVertical: 20,
       width: 100,
       height: 100,
+    },
+    heading: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+    },
+
+    bookTitle: {
+      fontSize: 18,
+      fontWeight: '600',
+      marginBottom: 4,
+    },
+
+    bookAuthor: {
+      fontSize: 14,
+      fontWeight: '400',
     },
     input: {
       width: '80%',

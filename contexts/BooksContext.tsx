@@ -1,7 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { tablesDB } from '../lib/appwrite';
 import { useUser } from '../hooks/useUser';
-import { Permission, Role } from 'react-native-appwrite';
+import { Permission, Role, Query } from 'react-native-appwrite';
 import { Book } from '../types/Book';
 
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID;
@@ -23,11 +23,16 @@ export const BooksContext = createContext<BooksContextType | undefined>(
 );
 
 export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState<Book[]>([]);
   const { user } = useUser();
 
   async function fetchBooks() {
-    const result = await tablesDB.listRows(DATABASE_ID!, 'books');
+    if (!user) {
+      throw new Error('User is not authenticated');
+    }
+    const result = await tablesDB.listRows(DATABASE_ID!, 'books', [
+      Query.equal('userId', user.$id),
+    ]);
     const books: Book[] = result.rows.map((row: any) => ({
       id: row.id,
       title: row.title,
@@ -40,7 +45,7 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function fetchBooksById(bookId: string) {
     const result = await tablesDB.listRows(DATABASE_ID!, 'books', [
-      `id=${bookId}`,
+      Query.equal('id', bookId),
     ]);
     if (!result.rows || result.rows.length === 0) {
       throw new Error('Book not found');
@@ -71,6 +76,9 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
         Permission.delete(Role.user(user.$id)),
       ]
     );
+
+    const updatedBooks = await fetchBooks();
+    setBooks(updatedBooks);
   }
 
   async function removeBook(bookId: string) {
@@ -98,6 +106,17 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     };
     return book;
   }
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    } else {
+      (async () => {
+        const books = await fetchBooks();
+        setBooks(books);
+      })();
+    }
+  }, [user]);
 
   return (
     <BooksContext.Provider
