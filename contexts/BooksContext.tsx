@@ -30,9 +30,11 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     if (!user) {
       throw new Error('User is not authenticated');
     }
-    const result = await tablesDB.listRows(DATABASE_ID!, 'books', [
-      Query.equal('userId', user.$id),
-    ]);
+    const result = await tablesDB.listRows({
+      databaseId: DATABASE_ID!,
+      tableId: 'books',
+      queries: [Query.equal('userId', user.$id)],
+    });
     const books: Book[] = result.rows.map((row: any) => ({
       id: row.id,
       title: row.title,
@@ -44,9 +46,11 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   async function fetchBooksById(bookId: string) {
-    const result = await tablesDB.listRows(DATABASE_ID!, 'books', [
-      Query.equal('id', bookId),
-    ]);
+    const result = await tablesDB.listRows({
+      databaseId: DATABASE_ID!,
+      tableId: 'books',
+      queries: [Query.equal('id', bookId)],
+    });
     if (!result.rows || result.rows.length === 0) {
       throw new Error('Book not found');
     }
@@ -65,37 +69,41 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     if (!user) {
       throw new Error('User is not authenticated');
     }
-    const newBook = await tablesDB.createRow(
-      DATABASE_ID!,
-      'books',
-      'unique()',
-      { ...bookData, userId: user.$id },
-      [
+    const newBook = await tablesDB.createRow({
+      databaseId: DATABASE_ID!,
+      tableId: 'books',
+      rowId: 'unique()',
+      data: { ...bookData, userId: user.$id },
+      permissions: [
         Permission.read(Role.user(user.$id)),
         Permission.update(Role.user(user.$id)),
         Permission.delete(Role.user(user.$id)),
-      ]
-    );
+      ],
+    });
 
     const updatedBooks = await fetchBooks();
     setBooks(updatedBooks);
   }
 
   async function removeBook(bookId: string) {
-    await tablesDB.deleteRow(DATABASE_ID!, 'books', bookId);
+    await tablesDB.deleteRow({
+      databaseId: DATABASE_ID!,
+      tableId: 'books',
+      rowId: bookId,
+    });
   }
 
   async function updateBook(
     bookId: string,
     bookData: Partial<Omit<Book, 'id' | 'userId'>>
   ): Promise<Book> {
-    const updatedRow = await tablesDB.updateRow(
-      DATABASE_ID!,
-      'books',
-      bookId,
-      bookData,
-      [] // or provide permissions array as required
-    );
+    const updatedRow = await tablesDB.updateRow({
+      databaseId: DATABASE_ID!,
+      tableId: 'books',
+      rowId: bookId,
+      data: bookData,
+      // permissions:   []
+    });
     const row: any = updatedRow;
     const book: Book = {
       id: row.$id || row.id,
