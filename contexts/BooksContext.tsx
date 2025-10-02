@@ -93,6 +93,8 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
       tableId: 'books',
       rowId: bookId,
     });
+    const updatedBooks = await fetchBooks();
+    setBooks(updatedBooks);
   }
 
   async function updateBook(
