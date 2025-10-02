@@ -5,11 +5,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SAFE_AREA_EXTRA_TOP } from '../../constants/layout';
 import Card from '../../components/Card';
 import { useRouter } from 'expo-router';
+import { truncateString, handleRemoveItem } from '../../lib/utils';
 
 export default function Books() {
   const { theme, styles } = useTheme();
   const insets = useSafeAreaInsets();
-  const { books } = useBooks();
+  const { books, removeBook } = useBooks();
   const router = useRouter();
 
   return (
@@ -28,13 +29,28 @@ export default function Books() {
       <FlatList
         data={books}
         renderItem={({ item }) => (
-          <Card>
+          <Card
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
             <Pressable
               onPress={() => router.push(`/books/${item.id}`)}
               style={{ padding: 16 }}
             >
-              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.title}>{truncateString(item.title)}</Text>
               <Text style={styles.author}>Written by {item.author}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() =>
+                handleRemoveItem(item.id as string, item.title, removeBook)
+              }
+              style={{
+                padding: 16,
+                marginRight: 8,
+              }}
+            >
+              <Text style={{ color: theme.error || '#ff4444', fontSize: 18 }}>
+                ✕
+              </Text>
             </Pressable>
           </Card>
         )}
