@@ -19,7 +19,7 @@ export const createThemedStyles = (theme: any) =>
       color: theme.link,
     },
     title: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: 'bold',
       color: theme.text,
       marginBottom: 20,
@@ -60,6 +60,8 @@ export const createThemedStyles = (theme: any) =>
       borderLeftWidth: 3,
       borderLeftColor: theme.accent,
       overflow: 'hidden',
+      width: '90%',
+      marginVertical: 10,
     },
     img: {
       marginVertical: 20,
@@ -72,16 +74,22 @@ export const createThemedStyles = (theme: any) =>
       paddingHorizontal: 16,
       paddingBottom: 16,
     },
-
-    bookTitle: {
-      fontSize: 18,
-      fontWeight: '600',
-      marginBottom: 4,
-    },
-
-    bookAuthor: {
+    author: {
       fontSize: 14,
       fontWeight: '400',
+      color: theme.text,
+    },
+    description: {
+      fontSize: 14,
+      fontWeight: '400',
+      color: theme.text,
+      marginTop: 10,
+    },
+    updatedAt: {
+      fontSize: 12,
+      fontStyle: 'italic',
+      color: theme.secondaryText,
+      marginTop: 10,
     },
     input: {
       width: '80%',
