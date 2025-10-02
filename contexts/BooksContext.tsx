@@ -36,11 +36,12 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
       queries: [Query.equal('userId', user.$id)],
     });
     const books: Book[] = result.rows.map((row: any) => ({
-      id: row.id,
+      id: row.$id,
       title: row.title,
       author: row.author,
       userId: row.userId,
       description: row.description,
+      updateAt: row.$updatedAt,
     }));
     return books;
   }
@@ -56,11 +57,12 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const row = result.rows[0];
     const book: Book = {
-      id: row.id,
+      id: row.$id,
       title: row.title,
       author: row.author,
       userId: row.userId,
       description: row.description,
+      updateAt: row.$updatedAt,
     };
     return book;
   }

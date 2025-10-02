@@ -4,11 +4,13 @@ import { useBooks } from '../../hooks/useBooks';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SAFE_AREA_EXTRA_TOP } from '../../constants/layout';
 import Card from '../../components/Card';
+import { useRouter } from 'expo-router';
 
 export default function Books() {
   const { theme, styles } = useTheme();
   const insets = useSafeAreaInsets();
   const { books } = useBooks();
+  const router = useRouter();
 
   return (
     <View
@@ -27,13 +29,12 @@ export default function Books() {
         data={books}
         renderItem={({ item }) => (
           <Card>
-            <Pressable onPress={() => {}} style={{ padding: 16 }}>
-              <Text style={[styles.bookTitle, { color: theme.text }]}>
-                {item.title}
-              </Text>
-              <Text style={[styles.bookAuthor, { color: theme.secondaryText }]}>
-                Written by {item.author}
-              </Text>
+            <Pressable
+              onPress={() => router.push(`/books/${item.id}`)}
+              style={{ padding: 16 }}
+            >
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.author}>Written by {item.author}</Text>
             </Pressable>
           </Card>
         )}
