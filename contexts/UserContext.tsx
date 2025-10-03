@@ -21,10 +21,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function login(email: string, password: string): Promise<void> {
     try {
-      const userAccount = await account.createEmailPasswordSession(
-        email,
-        password
-      );
+      const userAccount = await account.createEmailPasswordSession({
+        email: email,
+        password: password,
+      });
       const userInfo = await account.get();
       setUser(userInfo);
     } catch (error) {
@@ -34,7 +34,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function register(email: string, password: string) {
     try {
-      const userAccount = await account.create(ID.unique(), email, password);
+      const userAccount = await account.create({
+        userId: ID.unique(),
+        email: email,
+        password: password,
+        name: '', // optional
+      });
       await login(email, password);
     } catch (error) {
       throw Error(error instanceof Error ? error.message : String(error));
@@ -42,7 +47,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   async function logout() {
-    await account.deleteSession('current');
+    await account.deleteSession({ sessionId: 'current' });
     setUser(null);
   }
 
