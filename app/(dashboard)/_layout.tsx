@@ -26,19 +26,6 @@ export default function DashboardLayout() {
         }}
       >
         <Tabs.Screen
-          name="profile"
-          options={{
-            title: 'Profile',
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? 'person' : 'person-outline'}
-                size={24}
-                color={focused ? theme.iconColorFocused : theme.iconColor}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
           name="books"
           options={{
             title: 'Books',
@@ -52,18 +39,19 @@ export default function DashboardLayout() {
           }}
         />
         <Tabs.Screen
-          name="create"
+          name="profile"
           options={{
-            title: 'Create',
+            title: 'Profile',
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name={focused ? 'create' : 'create-outline'}
+                name={focused ? 'person' : 'person-outline'}
                 size={24}
                 color={focused ? theme.iconColorFocused : theme.iconColor}
               />
             ),
           }}
         />
+        <Tabs.Screen name="bookForm" options={{ href: null }} />
         <Tabs.Screen name="books/[id]" options={{ href: null }} />
       </Tabs>
     </UserOnly>

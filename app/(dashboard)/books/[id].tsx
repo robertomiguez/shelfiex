@@ -12,8 +12,8 @@ const BookDetails = () => {
 
   const { id } = useLocalSearchParams();
   const { books } = useBooks();
-  const book = books.find((b) => b.id === id);
-  console.log(id);
+  const book = books.find((b) => b.$id === id);
+
   return (
     <View
       style={[
@@ -31,7 +31,9 @@ const BookDetails = () => {
         <Text style={styles.description}>{book?.description}</Text>
         <Text style={styles.updatedAt}>
           Last updated:{' '}
-          {book?.updateAt ? new Date(book.updateAt).toLocaleString() : 'N/A'}
+          {book?.$updatedAt
+            ? new Date(book.$updatedAt).toLocaleString()
+            : 'N/A'}
         </Text>
       </Card>
     </View>

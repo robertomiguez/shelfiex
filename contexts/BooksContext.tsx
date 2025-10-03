@@ -10,11 +10,11 @@ interface BooksContextType {
   books: Book[];
   fetchBooks: () => Promise<Book[]>;
   fetchBooksById: (bookId: string) => Promise<Book>;
-  addBook: (bookData: Omit<Book, 'id' | 'userId'>) => Promise<void>;
+  addBook: (bookData: Omit<Book, '$id' | 'userId'>) => Promise<void>;
   removeBook: (bookId: string) => Promise<void>;
   updateBook: (
     bookId: string,
-    bookData: Partial<Omit<Book, 'id' | 'userId'>>
+    bookData: Partial<Omit<Book, '$id' | 'userId'>>
   ) => Promise<Book>;
 }
 
@@ -36,12 +36,12 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
       queries: [Query.equal('userId', user.$id)],
     });
     const books: Book[] = result.rows.map((row: any) => ({
-      id: row.$id,
+      $id: row.$id,
       title: row.title,
       author: row.author,
       userId: row.userId,
       description: row.description,
-      updateAt: row.$updatedAt,
+      $updateAt: row.$updatedAt,
     }));
     return books;
   }
@@ -50,19 +50,19 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     const result = await tablesDB.listRows({
       databaseId: DATABASE_ID!,
       tableId: 'books',
-      queries: [Query.equal('id', bookId)],
+      queries: [Query.equal('$id', bookId)],
     });
     if (!result.rows || result.rows.length === 0) {
       throw new Error('Book not found');
     }
     const row = result.rows[0];
     const book: Book = {
-      id: row.$id,
+      $id: row.$id,
       title: row.title,
       author: row.author,
       userId: row.userId,
       description: row.description,
-      updateAt: row.$updatedAt,
+      $updatedAt: row.$updatedAt,
     };
     return book;
   }
@@ -99,7 +99,7 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function updateBook(
     bookId: string,
-    bookData: Partial<Omit<Book, 'id' | 'userId'>>
+    bookData: Partial<Omit<Book, '$id' | 'userId'>>
   ): Promise<Book> {
     const updatedRow = await tablesDB.updateRow({
       databaseId: DATABASE_ID!,
@@ -110,12 +110,14 @@ export const BooksProvider = ({ children }: { children: React.ReactNode }) => {
     });
     const row: any = updatedRow;
     const book: Book = {
-      id: row.$id || row.id,
+      $id: row.$id,
       title: row.title,
       author: row.author,
       userId: row.userId,
       description: row.description,
+      $updatedAt: row.$updatedAt,
     };
+    setBooks((prev) => prev.map((b) => (b.$id === book.$id ? book : b)));
     return book;
   }
 

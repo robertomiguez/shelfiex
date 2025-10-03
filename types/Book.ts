@@ -1,8 +1,8 @@
 export type Book = {
-  id?: string;
+  $id?: string;
   userId?: string;
-  updateAt?: string;
-  createdAt?: string;
+  $updatedAt?: string;
+  $createdAt?: string;
   title: string;
   author: string;
   description: string;
