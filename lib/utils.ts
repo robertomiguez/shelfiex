@@ -21,3 +21,11 @@ export const handleRemoveItem = (
     },
   ]);
 };
+
+export const handleEditItem = (
+  id: string,
+  title: string,
+  onEdit: (id: string) => void
+) => {
+  onEdit(id);
+};
