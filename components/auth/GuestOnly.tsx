@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
+
+import { router } from 'expo-router';
 import { ActivityIndicator, View } from 'react-native';
 import { useUser } from '../../hooks/useUser';
 import { useTheme } from '../../contexts/ThemeContext';
-import Profile from '../../app/(dashboard)/profile';
 
 interface GuestOnlyProps {
   children: React.ReactNode;
@@ -16,6 +18,12 @@ const GuestOnly = ({ children }: GuestOnlyProps) => {
   const { theme } = useTheme();
   const { user, authChecked }: UseGuestResult = useUser();
 
+  useEffect(() => {
+    if (authChecked && user) {
+      router.replace('/books');
+    }
+  }, [authChecked, user]);
+
   // 1. still loading
   if (!authChecked) {
     return (
@@ -27,7 +35,7 @@ const GuestOnly = ({ children }: GuestOnlyProps) => {
 
   // 2. User authenticated
   if (user) {
-    return <Profile />;
+    return null; // evita renderizar os filhos até navegar
   }
 
   // 3.Guest (not authenticated)

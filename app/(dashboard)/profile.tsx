@@ -15,11 +15,13 @@ export default function Profile() {
         styles.container,
         {
           backgroundColor: theme.background,
-          paddingTop: insets.top + SAFE_AREA_EXTRA_TOP,
+          paddingTop: insets.top + SAFE_AREA_EXTRA_TOP + 20,
         },
       ]}
     >
-      <Text style={[{ color: theme.text }, styles.text]}>{user?.email}</Text>
+      <Text style={[{ color: theme.text }, styles.text]}>
+        Hellor {user?.email}
+      </Text>
 
       <Text style={[{ color: theme.text }, styles.text]}>
         Time to start reading some books...
